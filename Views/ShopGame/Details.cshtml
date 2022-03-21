@@ -1,0 +1,194 @@
+﻿@model ShopConnection.SanPham
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/TrangChu.cshtml";
+}
+
+@*//khi click 1 sản sẽ hiện lên*@
+<div id="page-content" class="single-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="category.html">@Html.ActionLink("Tất Cả Sản Phẩm", "Index", "ShopGame")</a></li>
+                    <li><a href="#">@Model.TenSanPham</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div id="main-content">
+                <div class="product">
+                    <div class="col-md-6">
+                        <div class="image">
+                            <img src="~/Asset/img/@Model.HinhChinh" />
+                            <div class="image-more">
+                                <ul class="row">
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/img/@Model.Hinh1" style="width:65px; height:65px;"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/img/@Model.Hinh2" style="width:65px; height:65px;"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/img/@Model.Hinh3" style="width:65px; height:65px;"></a>
+                                    </li>
+                                    <li class="col-lg-3 col-sm-3 col-xs-4">
+                                        <a href="#"><img class="img-responsive" src="~/Asset/img/@Model.Hinh4" style="width:65px; height:65px;"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="caption">
+                            <div class="name"><h3>@Model.TenSanPham</h3></div>
+                            <div><h5>Lượt view : @Model.LuotView</h5></div>
+                            <div class="price"> @String.Format(System.Globalization.CultureInfo.GetCultureInfo("vi-VN"), "{0:c}", Model.Gia)</div>
+
+
+
+                            @using (Html.BeginForm("Them", "GioHang", FormMethod.Post))
+                            {
+                <input type="hidden" name="tensanpham" value="@Model.TenSanPham" />
+                    <input type="hidden" name="masanpham" value="@Model.MaSanPham" />
+                     <input type="hidden" name="gia" value="@Model.Gia" />
+                      <label>Số Lượng: </label> <input class="form-inline quantity" type="number" value="1" min="1" max="1000" name="soluong" /> if (User.Identity.IsAuthenticated)
+                         {
+                          <input type="submit" class="btn btn-2 " value="Thêm vào giỏ"> }
+                      else
+                       {
+                            <span>Đăng nhập để thêm giỏ hàng</span>}
+                                    
+
+                       }
+
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                
+                    <div id="description" class="tab-pane fade in active">
+                        @Html.Raw((Model.CauHinh))
+
+                    </div>
+                    <div class="product-desc">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                    <form method="post" action="~/BinhLuan/Create">
+                        <input type="hidden" name="MaSanPham" value="@Model.MaSanPham" />
+                        <textarea style="width:100%;max-width:100%;max-height:300px;" maxlength="2048" placeholder="Nhập nội dung cần bình luận...." name="NoiDung"></textarea>
+                        <input type="submit" value="Bình Luận" style="float:right;" />
+                    </form> }
+                                else
+                                {
+                    <h2>Vui lòng đăng nhập để bình luận</h2>}
+
+
+                        <span><br /><br /><br /><br /></span>
+                        @{ int page = ViewBag.page;
+                                        int pagesize = ViewBag.pagesize; }
+                        @Html.Partial("_BinhLuan", WebGame.Models.BUS.BinhLuanBUS.LoadBinhLuan(page, pagesize))
+
+                    </div>
+
+
+
+
+                @*<ul class="nav nav-tabs">
+            <li class="active"><a href="#description">Mô Tả</a></li>
+            <li><a href="#review">Review</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="description" class="tab-pane fade in active">
+                @Html.Raw((Model.CauHinh))
+
+            </div>
+        </div>*@
+                @*<div id="review" class="tab-pane fade">
+        <div class="review-text">
+            @if (User.Identity.IsAuthenticated)
+            {
+        <form method="post" action="~/BinhLuan/Create">
+            <input type="hidden" name="MaSanPham" value="@Model.MaSanPham" />
+            <textarea style="width:100%;max-width:100%;max-height:300px;" maxlength="2048" placeholder="Nhập nội dung cần bình luận...." name="NoiDung"></textarea>
+            <input type="submit" value="Bình Luận" style="float:right;" />
+        </form> }
+                    else
+                    {
+        <h2>Vui lòng đăng nhập để bình luận</h2>}
+
+
+            <span><br /><br /><br /><br /></span>
+            @{ int page = ViewBag.page;
+                            int pagesize = ViewBag.pagesize; }
+            @Html.Partial("_BinhLuan", WebGame.Models.BUS.BinhLuanBUS.LoadBinhLuan(page, pagesize))
+        </div>*@
+
+
+
+                @*<div class="product-related">
+            <div class="heading"><h2>RELATED PRODUCTS</h2></div>
+            <div class="products">
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="product">
+                        <div class="image"><a href="product.html"><img src="~/Asset/images/iphone.png" /></a></div>
+                        <div class="buttons">
+                            <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
+                            <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
+                        </div>
+                        <div class="caption">
+                            <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
+                            <div class="price">$122<span>$98</span></div>
+                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="product">
+                        <div class="image"><a href="product.html"><img src="~/Asset/images/galaxy-s4.jpg" /></a></div>
+                        <div class="buttons">
+                            <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
+                            <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
+                        </div>
+                        <div class="caption">
+                            <div class="name"><h3><a href="product.html">Aliquam erat volutpat</a></h3></div>
+                            <div class="price">$122<span>$98</span></div>
+                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="product">
+                        <div class="image"><a href="product.html"><img src="~/Asset/images/galaxy-note.jpg" /></a></div>
+                        <div class="buttons">
+                            <a class="btn cart" href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
+                            <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
+                        </div>
+                        <div class="caption">
+                            <div class="name"><a href="product.html">Aliquam erat volutpat</a></div>
+                            <div class="price">$122<span>$98</span></div>
+                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>*@
+        
+                </div>
+            </div>
+        </div>
+</div>
+

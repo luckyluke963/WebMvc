@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ShopConnection.NhaSanXuat>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/MainLayoutAdmin.cshtml";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        margin: auto;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #5d5e63;
+    }
+
+    th {
+        background-color: #299fd6;
+        color: white;
+    }
+</style>
+<center> <h2 style="color:red"> Quản Lý Nhà Sản Xuất  </h2></center>
+
+<table>
+    <tr>
+        <th>Mã Nhà Sản Xuất</th>
+        <th>Tên Nhà Sản Xuất</th>
+        <th>Khóa</th>
+        <th colspan="2">
+            <a href="@Url.Action("Create","NhaSanXuatAdmin")"><img src="~/Asset/images/AddNSX.png" /></a>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaNhaSanXuat</td>
+            <td>@item.TenNhaSanXuat</td>
+            <td>@item.TinhTrang</td>
+            <td><a href="@Url.Action("Edit","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})"> <img src="~/Asset/images/edit.png" /></a> </td>
+            <td><a href="@Url.Action("XoaTamThoi","NhaSanXuatAdmin",new { id = @item.MaNhaSanXuat})"> <img src="~/Asset/images/Delete.png" /></a> </td>
+        </tr>
+    }
+
+</table>
+
